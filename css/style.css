@@ -1,0 +1,97 @@
+
+hr {
+    width: 80%;
+    height: 1px;
+    background-color: rgba(45, 49, 102, 0.685);;
+}
+.flexClass {
+    display: flex;
+    padding: 20px;  
+}
+
+.navigator {
+    justify-content: space-around;
+    background: rgba(69, 69, 116, 0.842);
+}
+
+.navigator a{
+    font-size: 20px;
+    color: rgb(255, 246, 246);
+    margin: auto;
+    cursor: pointer;
+}
+
+.navigator a:hover{
+    font-weight: 550;
+}
+
+.textForm {
+    justify-content: flex-start;
+    width: 55%;
+    margin-left: 15%;
+    text-align: center;
+}
+
+.seeLessons {
+    border-radius: 5px;
+    border		: 2px solid;
+    border-color:   rgba(45, 49, 102, 0.685);
+    color: rgba(45, 49, 102, 0.685);
+    width: 60%;
+    max-width: 60%;
+    min-width: 60%;
+    min-height: 20px;
+    max-height: 60px;
+    height: 20px;
+    padding: 10px 0 10px 0px;
+    font-size: 20px;
+}
+
+.seeLessons::placeholder {
+    color: rgba(45, 49, 102, 0.685);
+}
+
+.seeLessonsButton {
+    border-radius: 5px;
+    margin-left: 20px;
+    border-color:   rgba(45, 49, 102, 0.685);
+    background-color:  rgba(45, 49, 102, 0.685);
+    width: 100px;
+    height: 40px;
+    color: rgb(255, 246, 246);
+    font-size: 16px;
+    margin-top: auto;
+}
+
+.seeLessonsButton:hover {
+    border-radius: 6px;
+    background-color:  rgba(45, 49, 102, 0.842);
+}
+
+.list li{
+    list-style-image: url(../img/галочка.png); 
+    margin-left: 20%;
+    padding: 10px;
+    color: black;
+    font-size: 22px;
+}
+
+.list div{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (  max-width: 700px) {
+    .navigator {
+        flex-direction: column;
+    }
+    .seeLessons {
+        height: 60px;
+        min-width: 80%;
+    }
+    .seeLessonsButton {
+        margin-top: 20px;
+    }
+}
+
