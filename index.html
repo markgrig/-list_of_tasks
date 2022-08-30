@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/index.js"></script>
-    <script src="js/priceples.js"></script>
     <title> Object </title>
 </head>
 <body>
@@ -14,29 +12,30 @@
 <header>
     <nav class="flexClass navigator">
         <a> Задачи на Cегодня </a>
-        <a> Задачи на Эту Неделю </a>
+        <a> Задачи на Неделю </a>
         <a> Задачи на Потом </a>
     </nav>
 </header>
 
 <form class ="flexClass textForm">
-    <textarea class="seeLessons" placeholder="Посмотреть урок по JavaScript"></textarea>
-    <button  class="seeLessonsButton"> Cоздать  </button>
+    <textarea class="textForAdd" placeholder="Посмотреть урок по JavaScript" name = "nameTask" type = "text"></textarea>
+    <button  class="button" type = 'submit'> Cоздать  </button>
 </form>
 
-<ul class="list">
-    <div>
-        <li>  Посмотреть новый урок по JavaScript</li> 
-        <button  class="seeLessonsButton"> Удалить  </button>
-    </div>
-    <hr>
-    <div>
-        <li>  Cделать Дз к уроку по JavaScript</li>
-        <button  class="seeLessonsButton"> Удалить  </button>
-    </div>
-    <hr>
-</ul>
 
+<ol class="list">
+    <div>
+        <li data-number-task="1">  Посмотреть новый урок по JavaScript</li> 
+        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
+    </div>
+    <div>
+        <li data-number-task="2">  Cделать Дз к уроку по JavaScript</li>
+        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
+    </div>
+</ol>
+
+<script src="js/index.js"></script>
 </body>
+
 
 </html>
