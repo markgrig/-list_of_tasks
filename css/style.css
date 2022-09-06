@@ -1,6 +1,6 @@
 body{
     background-image: url(../img/background.jpg);
-    background-size: cover;
+    background-position: 50% 0;
 }
 hr {
     width: 80%;
@@ -128,7 +128,10 @@ hr {
     padding: 10px;
 }
 
-@media (  max-width: 700px) {
+@media (  max-width: 800px) {
+    body{
+        background-image: url(../img/background_phone.jpg);
+    }
     .navigator {
         flex-direction: column;
     }
