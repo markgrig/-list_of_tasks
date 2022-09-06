@@ -1,3 +1,37 @@
+const tasks = [
+    {
+        id: '1138465078061',
+        completed: false,
+        text: 'Посмотреть новый урок по JavaScript',
+    },
+    {
+        id: '1138465078062',
+        completed: false,
+        text: 'Выполнить тест после урока',
+    },
+    {
+        id: '1138465078063',
+        completed: false,
+        text: 'Выполнить ДЗ после урока',
+    },
+]
+
+const listOfTask = document.querySelector('.list') 
+console.log(listOfTask);
+tasks.forEach( ( el) => {
+    const div = document.createElement('div')
+    const HTMLforApp = 
+    `
+    <li data-id-task="${el.id}">  ${el.text} </li> 
+    <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
+    `
+    div.innerHTML = HTMLforApp
+    listOfTask.append(div)
+
+})
+
+//не входит в задачу
+
 const navigation = document.querySelectorAll('.navigator a')
 
 navigation.forEach( anchor => {
@@ -10,6 +44,8 @@ navigation.forEach( anchor => {
         }  
     ) 
 });
+
+let indexBackgroundImage = 1
 
 document.addEventListener( 'keydown' , ( event ) => {
     //console.log(event);
@@ -28,7 +64,20 @@ document.addEventListener( 'keydown' , ( event ) => {
                 element.remove()
             }
         }
+    
     });
+
+    if( altKey && ( key.toLocaleLowerCase() === "и" || key.toLocaleLowerCase() === "b" )  ) {
+        
+        indexBackgroundImage += 1
+        if ( indexBackgroundImage === 5 ) {
+            indexBackgroundImage = 1
+        }
+
+        const bodyElement = document.querySelector('body')
+        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
+        
+    }
 })
 
 const creatToolTip = (text) => {
@@ -58,25 +107,22 @@ buttonForDelete.forEach( (element, index) => {
     })    
 });
 
-//ещё есть mousemove
-
-document.addEventListener( 'contextmenu' , ( event ) => {
-    //console.log(event);
-    //event.preventDefault()
-
-})
-
-
-//change (после ввода), input (сразу!)
 
 const checkTextValidation = ( text ) => {
-     if ( !text ) {
-        return false 
+    const errorArray = []
+    if ( !text ) {
+        errorArray.push('Пустое поле для добавления задачи!') 
      } 
      else {
-        return true 
+        const searchTask = tasks.some( el => { return el.text.toLocaleLowerCase() === text.toLocaleLowerCase()  } )
+        console.log( text.toLocaleLowerCase());
+        if ( searchTask ){
+            errorArray.push('Такая задача уже есть!')
+        }
      }
+     return errorArray
 }
+
 
 const textForAdd = document.querySelector('.textForm')
 
@@ -86,10 +132,19 @@ textForAdd.addEventListener( 'input' , (event) => {
     const { value } = target
     
     const messageBoxDOM = document.querySelector('.messageAboutError')
-    if ( !checkTextValidation(value)) {
+    const errorArray = checkTextValidation(value)
+   
+    if ( errorArray[0] ) {
+
+        if ( messageBoxDOM ){
+            messageBoxDOM.remove()
+        }
+
         const newMassageBox = document.createElement('span')
         newMassageBox.className = 'messageAboutError'
-        newMassageBox.textContent = 'Пустое поле для добавления задачи!'
+
+        
+        newMassageBox.textContent = errorArray.join(' , ')
         textForAdd.insertAdjacentElement('afterEnd',newMassageBox)
     } 
     else if ( checkTextValidation(value) && messageBoxDOM ){
@@ -105,6 +160,21 @@ textForm.addEventListener( 'submit' , ( event ) => {
         const { target } = event
         if (target.nameTask.value) {
             alert(`Вы создали задачу ${target.nameTask.value.trim()}` )
+            const newTask = {
+                id: Date.now(),
+                completed: false,
+                text: `${target.nameTask.value.trim()}`,
+            }
+            tasks.push(newTask)
+            
+            const div = document.createElement('div')
+            const HTMLforApp = 
+            `
+            <li data-id-task="${newTask .id}">  ${newTask .text} </li> 
+            <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
+            `
+            div.innerHTML = HTMLforApp
+            listOfTask.append(div)
         }
 })
 
