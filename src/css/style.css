@@ -1,4 +1,5 @@
 body{
+    background-color: black;
     background-image: url(../img/background1.jpg);
     background-position: 50% 0%;
     background-size: cover;
