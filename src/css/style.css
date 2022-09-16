@@ -186,6 +186,15 @@ hr {
 
 
 @media (  max-width: 700px) {
+    .list div{
+        width: 98%;
+    }
+    .list li{
+        font-size: 20px;
+    }
+    .list{
+        margin-left: -20%;
+    }
     .navigator {
         flex-direction: column;
     }
@@ -199,7 +208,7 @@ hr {
     }
     .modalOverlay {
         width: 60%;
-        height: 40%;    
+        height: 30%;    
     }
     
     .toolTip{

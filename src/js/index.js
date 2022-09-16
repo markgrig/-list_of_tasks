@@ -65,7 +65,7 @@ tasks.forEach( ( el) => {
     const div = document.createElement('div')
     const HTMLforApp = 
     `
-    <li data-number-task="${listOfTask.querySelectorAll('div').length + 1}">  ${el.text} </li> 
+    <li>  ${el.text} </li> 
     <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
     `
     div.innerHTML = HTMLforApp
@@ -144,7 +144,7 @@ bodyElement.addEventListener( 'mouseover', (event) => {
     //события наведения на подсказку 
     if (target.closest('#buttonForDelete')) {
         console.log(target.previousElementSibling);
-        const toolTipeHTML = creatToolTip( `Нажмите, чтобы удалить ${target.previousElementSibling.getAttribute('data-number-task')} задачу` )
+        const toolTipeHTML = creatToolTip( `Нажмите, чтобы удалить эту задачу` )
         target.insertAdjacentElement('afterEnd',toolTipeHTML)
     }
 })
@@ -152,11 +152,36 @@ bodyElement.addEventListener( 'mouseover', (event) => {
 
 bodyElement.addEventListener( 'mouseout', (event) => {
     const { target } = event 
-    
-    //событие убирания мышки с кнопки удаления
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+         //события появления модального окна
     if (target.closest('#buttonForDelete')) {
-    target.nextElementSibling.remove()
+        const modalWindow = document.querySelector("#deleteModal")
+        modalWindow.firstChild.nextElementSibling.textContent = ` Вы действительно хотите удалить эту задачу?`
+
+        modalWindow.classList.add( 'modalOverlay')
+        modalWindow.classList.remove( 'selectorHidden')
+        modalWindow.classList.add( 'modalOverlay')
+        console.log(modalWindow );
+        const buttonYes = document.querySelector(".buttonYes")
+        const buttonNo  = document.querySelector(".buttonNo")
+
+        buttonYes.addEventListener( 'click',  ( event ) => {
+            target.closest('div').remove()
+            modalWindow.classList.add( 'selectorHidden')
+        })
+        buttonNo.addEventListener( 'click',  ( event ) => {
+            modalWindow.classList.add( 'selectorHidden')
+        })
     }
+      } else {
+        // код для обычных устройств
+        if (target.closest('#buttonForDelete')) {
+            target.nextElementSibling.remove()
+            }
+    }
+   
+
 }) 
 
 
