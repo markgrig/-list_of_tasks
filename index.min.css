@@ -2,9 +2,10 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./src/css/style.css ***!
   \*********************************************************************/
 body{
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.95);
     background-image: url(1a54a36ae7cec1854b13.jpg);
     background-position: 50% 0%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -189,6 +190,11 @@ hr {
 
 
 @media (  max-width: 700px) {
+    body{
+        background-size: auto;
+        background-attachment: scroll;
+        background-color: white;
+    }
     .list div{
         width: 98%;
     }
