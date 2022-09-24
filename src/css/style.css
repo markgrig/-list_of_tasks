@@ -189,6 +189,7 @@ hr {
 @media (  max-width: 700px) {
     body{
         background-size: auto;
+        background-attachment: scroll;
         background-color: white;
     }
     .list div{
