@@ -2,6 +2,7 @@ body{
     background-color: black;
     background-image: url(../img/background1.jpg);
     background-position: 50% 0%;
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
@@ -186,6 +187,9 @@ hr {
 
 
 @media (  max-width: 700px) {
+    body{
+        background-size: auto;
+    }
     .list div{
         width: 98%;
     }
