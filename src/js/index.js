@@ -88,11 +88,15 @@ document.addEventListener( 'keydown' , ( event ) => {
            
 
             const modalWindow = document.querySelector("#deleteModal")
-            
+            const blackBackground = document.querySelector("#black-background")
+           
+
             modalWindow.firstChild.nextElementSibling.textContent = `Вы действительно хотите удалить задачу под номером ${key} ?`
             
             modalWindow.classList.add( 'modalOverlay')
             modalWindow.classList.remove( 'selectorHidden')
+
+            blackBackground.classList.remove( 'selectorHidden')
     
             const buttonYes = document.querySelector(".buttonYes")
             const buttonNo  = document.querySelector(".buttonNo")
@@ -104,10 +108,12 @@ document.addEventListener( 'keydown' , ( event ) => {
                 }
                 element.remove()
                 modalWindow.classList.add( 'selectorHidden')
+                blackBackground.classList.add( 'selectorHidden')
             
             })
             buttonNo.addEventListener( 'click',  ( event ) => {
                 modalWindow.classList.add( 'selectorHidden')
+                blackBackground.classList.add( 'selectorHidden')
             })
         }
     
@@ -157,21 +163,27 @@ bodyElement.addEventListener( 'mouseout', (event) => {
          //события появления модального окна
     if (target.closest('#buttonForDelete')) {
         const modalWindow = document.querySelector("#deleteModal")
+        const blackBackground = document.querySelector("#black-background")
+
         modalWindow.firstChild.nextElementSibling.textContent = ` Вы действительно хотите удалить эту задачу?`
 
         modalWindow.classList.add( 'modalOverlay')
         modalWindow.classList.remove( 'selectorHidden')
         modalWindow.classList.add( 'modalOverlay')
-        console.log(modalWindow );
+        
+        blackBackground.classList.remove( 'selectorHidden')
+        
         const buttonYes = document.querySelector(".buttonYes")
         const buttonNo  = document.querySelector(".buttonNo")
 
         buttonYes.addEventListener( 'click',  ( event ) => {
             target.closest('div').remove()
             modalWindow.classList.add( 'selectorHidden')
+            blackBackground.classList.add( 'selectorHidden')
         })
         buttonNo.addEventListener( 'click',  ( event ) => {
             modalWindow.classList.add( 'selectorHidden')
+            blackBackground.classList.add( 'selectorHidden')
         })
     }
       } else {
@@ -192,21 +204,25 @@ bodyElement.addEventListener( 'click' , ( event ) => {
     //события появления модального окна
     if (target.closest('#buttonForDelete')) {
         const modalWindow = document.querySelector("#deleteModal")
+        const blackBackground = document.querySelector("#black-background")
         modalWindow.firstChild.nextElementSibling.textContent = ` Вы действительно хотите удалить эту задачу?`
 
         modalWindow.classList.add( 'modalOverlay')
         modalWindow.classList.remove( 'selectorHidden')
-        modalWindow.classList.add( 'modalOverlay')
-        console.log(modalWindow );
+      
+        blackBackground.classList.remove( 'selectorHidden')
+
         const buttonYes = document.querySelector(".buttonYes")
         const buttonNo  = document.querySelector(".buttonNo")
 
         buttonYes.addEventListener( 'click',  ( event ) => {
             target.closest('div').remove()
             modalWindow.classList.add( 'selectorHidden')
+            blackBackground.classList.add( 'selectorHidden')
         })
         buttonNo.addEventListener( 'click',  ( event ) => {
             modalWindow.classList.add( 'selectorHidden')
+            blackBackground.classList.add( 'selectorHidden')
         })
     }
 })   
