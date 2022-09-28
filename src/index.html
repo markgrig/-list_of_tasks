@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title> Список задач </title>
 </head>
-
 
 <body>
 
@@ -17,6 +17,7 @@
         <a data-name="future"> Задачи на Потом </a>
     </nav>
 </header>
+
 <div class="modalOverlay" id = "start">
     <h2 > Добро пожаловать! </h2>
     <h3 > Выбирите категорию списка задач в верхнем меню. </h3>
@@ -25,46 +26,15 @@
  <h2 class="titleName selectorHidden"> Название категории </h2>
 
 <form class ="flexClass textForm selectorHidden" id = "addTask">
+
     <textarea class="textForAdd" placeholder="Посмотреть урок по JavaScript" name = "nameTask" type = "text"></textarea>
-    <button  class="button" type = 'submit'> Cоздать  </button>
+    <button  class="button" type = 'submit' id = "button-for-create"> Cоздать  </button>
+
 </form>
 
-<ol class="list selectorHidden" id = "today" >
-    <div>
-        <li data-number-task="1">  Повторить пройденный материал по СSS, HTML, JavaScript</li> 
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-    <div>
-        <li data-number-task="2">  Cделать Дз к уроку по JavaScript</li>
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-</ol>
-
-<ol class="list selectorHidden" id ="week">
-    <div>
-        <li>  Начать учить какой-то модный фреймворк  </li> 
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-    <div>
-        <li>  Сделать сервре Node.js общедсотупным </li>
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-    <div>
-        <li>  Начать новый проект </li>
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-</ol>
-
-<ol class="list selectorHidden" id ="future">
-    <div>
-        <li data-number-task="1">  Выучить какой-то модный фреймворк </li> 
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-    <div>
-        <li data-number-task="2">  Оптимизировать свои самые первые проекты </li>
-        <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-    </div>
-</ol>
+<ol class="list selectorHidden" id = "today" ></ol>
+<ol class="list selectorHidden" id ="week"></ol>
+<ol class="list selectorHidden" id ="future"></ol>
 
 <div class="selectorHidden" id = "deleteModal">
     <h3 > Вы действительно хотите удалить эту задачу? </h3>
@@ -74,9 +44,11 @@
         </div>
 </div>
 
-<div class="selectorHidden" id = "black-background">
+<div class="selectorHidden" id = "black-background"></div>
+<div class = "flexClass menu" id="menu">
+    <button class = "button" id = "last-background" > LAST </button>
+    <button class = "button" id = "next-background"> NEXT </button>
 </div>
-
 </body>
 
 </html>
