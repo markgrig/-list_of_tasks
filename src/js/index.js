@@ -54,7 +54,13 @@ const tasksWeek = JSON.parse( localStorage.getItem("tasksWeek") ) ||
     category: "week"
 }
 
-
+const HTMLForModalWindow = `
+<h3> Вы действительно хотите удалить эту задачу? </h3>
+    <div class="deleteModalButtons">
+        <button class = "button buttonNo" > Нет </button> 
+        <button class = "button buttonYes" > Да </button>
+    </div>
+`
 
 const tasksFuture = JSON.parse( localStorage.getItem("tasksFuture") ) ||
 {
@@ -145,21 +151,18 @@ document.addEventListener( 'keydown' , ( event ) => {
      
         if ( element && altKey && ( index + 1 === Number(key) ) ) {
             //const confrimDelete = confirm(`Вы действительно хотите удалить задачу ${key} ?`)
-           
-
-            const modalWindow = document.querySelector("#deleteModal")
-            const blackBackground = document.querySelector("#black-background")
-           
-
+                
+            const modalWindow = document.createElement("div")
+            modalWindow.id =  'deleteModal'
+            modalWindow.classList.add( 'modalOverlay')
+            modalWindow.innerHTML = HTMLForModalWindow; 
             modalWindow.firstChild.nextElementSibling.textContent = `Вы xотите удалить задачу под номером ${key} ?`
             
-            modalWindow.classList.add( 'modalOverlay')
-            modalWindow.classList.remove( 'selectorHidden')
-
+            const blackBackground = document.querySelector("#black-background")      
             blackBackground.classList.remove( 'selectorHidden')
-    
-            const buttonYes = document.querySelector(".buttonYes")
-            const buttonNo  = document.querySelector(".buttonNo")
+
+            const buttonYes = modalWindow.querySelector(".buttonYes")
+            const buttonNo  = modalWindow.querySelector(".buttonNo")
     
             buttonYes.addEventListener( 'click',  ( event ) => {
 
@@ -237,19 +240,17 @@ bodyElement.addEventListener( 'touchend', (event) => {
     const { target } = event  
     //события появления модального окна
     if (target.closest('#buttonForDelete')) {
-        const modalWindow = document.querySelector("#deleteModal")
-        const blackBackground = document.querySelector("#black-background")
 
-        modalWindow.firstChild.nextElementSibling.textContent = ` Вы действительно хотите удалить эту задачу?`
+        const modalWindow = document.createElement("div")
+        modalWindow.id =  'deleteModal'
+        modalWindow.classList.add( 'modalOverlay')
+        modalWindow.innerHTML = HTMLForModalWindow; 
 
-        modalWindow.classList.add( 'modalOverlay')
-        modalWindow.classList.remove( 'selectorHidden')
-        modalWindow.classList.add( 'modalOverlay')
-        
+        const blackBackground = document.querySelector("#black-background")      
         blackBackground.classList.remove( 'selectorHidden')
-        
-        const buttonYes = document.querySelector(".buttonYes")
-        const buttonNo  = document.querySelector(".buttonNo")
+
+        const buttonYes = modalWindow.querySelector(".buttonYes")
+        const buttonNo  = modalWindow.querySelector(".buttonNo")
 
         buttonYes.addEventListener( 'touchend',  ( event ) => {
             target.closest('div').remove()
@@ -306,23 +307,23 @@ bodyElement.addEventListener( 'click' , ( event ) => {
     //события появления модального окна
     if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {
     if (target.closest('#buttonForDelete')) {
-        const modalWindow = document.querySelector("#deleteModal")
-        const blackBackground = document.querySelector("#black-background")
-        modalWindow.firstChild.nextElementSibling.textContent = ` Вы действительно хотите удалить эту задачу?`
 
+        
+        const modalWindow = document.createElement("div")
+        modalWindow.id =  'deleteModal'
         modalWindow.classList.add( 'modalOverlay')
-        modalWindow.classList.remove( 'selectorHidden')
-      
+        modalWindow.innerHTML = HTMLForModalWindow; 
+         
+        const blackBackground = document.querySelector("#black-background")      
         blackBackground.classList.remove( 'selectorHidden')
 
-        const buttonYes = document.querySelector(".buttonYes")
-        const buttonNo  = document.querySelector(".buttonNo")
+        const buttonYes = modalWindow.querySelector(".buttonYes")
+        const buttonNo  = modalWindow.querySelector(".buttonNo")
 
         
         buttonYes.addEventListener( 'click',  ( event ) => {
-            const indexDelete =  target.previousElementSibling.id
-            
-                            
+
+            const indexDelete =  target.previousElementSibling.id                 
             const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
                   
             if ( tasksToday.category == category ) { 
@@ -342,14 +343,16 @@ bodyElement.addEventListener( 'click' , ( event ) => {
 
 
             target.closest('div').remove()
-            modalWindow.classList.add( 'selectorHidden')
+            modalWindow.remove()
             blackBackground.classList.add( 'selectorHidden')
 
         })
         buttonNo.addEventListener( 'click',  ( event ) => {
-            modalWindow.classList.add( 'selectorHidden')
+            modalWindow.remove()
             blackBackground.classList.add( 'selectorHidden')
         })
+
+        bodyElement.append(modalWindow)   
     }
     if (target.closest('#last-background')) {
         indexBackgroundImage -= 1 
