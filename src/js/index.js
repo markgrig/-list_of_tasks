@@ -163,7 +163,7 @@ document.addEventListener( 'keydown' , ( event ) => {
 
             const buttonYes = modalWindow.querySelector(".buttonYes")
             const buttonNo  = modalWindow.querySelector(".buttonNo")
-    
+            console.log(modalWindow);
             buttonYes.addEventListener( 'click',  ( event ) => {
 
                 while ( element.nextElementSibling ) {
@@ -180,14 +180,15 @@ document.addEventListener( 'keydown' , ( event ) => {
                     localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
                 }
                 
-                modalWindow.classList.add( 'selectorHidden')
+                modalWindow.remove()
                 blackBackground.classList.add( 'selectorHidden')
             
             })
             buttonNo.addEventListener( 'click',  ( event ) => {
-                modalWindow.classList.add( 'selectorHidden')
+                modalWindow.remove()
                 blackBackground.classList.add( 'selectorHidden')
             })
+            bodyElement.append(modalWindow) 
         }
     
     });
@@ -253,12 +254,12 @@ bodyElement.addEventListener( 'touchend', (event) => {
         const buttonNo  = modalWindow.querySelector(".buttonNo")
 
         buttonYes.addEventListener( 'touchend',  ( event ) => {
-            target.closest('div').remove()
 
             const indexDelete =  target.previousElementSibling.id
             const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
 
-            modalWindow.classList.add( 'selectorHidden')
+            target.closest('div').remove()
+            modalWindow.remove()
             blackBackground.classList.add( 'selectorHidden')
 
             if ( tasksToday.category == category ) { 
@@ -278,9 +279,10 @@ bodyElement.addEventListener( 'touchend', (event) => {
 
         })
         buttonNo.addEventListener( 'touchend',  ( event ) => {
-            modalWindow.classList.add( 'selectorHidden')
+            modalWindow.remove()
             blackBackground.classList.add( 'selectorHidden')
         })
+        bodyElement.append(modalWindow) 
     }
     if (target.closest('#last-background')) {
         indexBackgroundImage -= 1 
@@ -325,7 +327,11 @@ bodyElement.addEventListener( 'click' , ( event ) => {
 
             const indexDelete =  target.previousElementSibling.id                 
             const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
-                  
+            
+            target.closest('div').remove()
+            modalWindow.remove()
+            blackBackground.classList.add( 'selectorHidden')
+
             if ( tasksToday.category == category ) { 
                 tasksToday.array.splice(indexDelete, 1 );
                 localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
@@ -340,11 +346,6 @@ bodyElement.addEventListener( 'click' , ( event ) => {
                 tasksFuture.array.splice(indexDelete, 1 );
                 localStorage.setItem("tasksFuture", JSON.stringify( tasksFuture ))
             }
-
-
-            target.closest('div').remove()
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
 
         })
         buttonNo.addEventListener( 'click',  ( event ) => {
