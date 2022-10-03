@@ -1,6 +1,6 @@
 body{
     background-color: rgba(0, 0, 0, 0.95);
-    background-image: url(../img/background1.jpg);
+    background-image: url(../img/background1.jpg    );
     background-position: 50% 0%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -68,7 +68,7 @@ hr {
     text-align: center;
 }
  
-.textForAdd {
+.inputForm {
     border-radius: 5px;
     border		: 2px solid;
     border-color:   rgba(34, 67, 144, 0.862);
@@ -278,7 +278,7 @@ hr {
     .menu {
         justify-content: space-around;
     }
-    .textForAdd {
+    .inputForm {
         height: 60px;
         min-width: 90%;
         max-height: 150px;
