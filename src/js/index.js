@@ -8,9 +8,11 @@ const bodyElement = document.querySelector('body')
 bodyElement.style.backgroundImage = `url(./img/background1.jpg)`
 
 //localStorage.clear()
-//навигация по сайту
+
 const navigation = bodyElement.querySelector('.navigator')
-let listOfTask = bodyElement.querySelector('.list') 
+let listOfTask = bodyElement.querySelector('.list')
+let indexBackgroundImage = 1
+let keydownUsing = false;
 
 //задачи добавляемые в список с использованием JS
 const tasksToday = JSON.parse( localStorage.getItem("tasksToday") ) ||
@@ -95,120 +97,7 @@ const renderTasks = (tasks, category) => {
     })
 
 } 
-
-renderTasks( tasksToday.array , "today")
-renderTasks( tasksWeek.array , "week")
-renderTasks( tasksFuture.array , "future")
-
-navigation.addEventListener(  'click' , ( event ) => {
-
-    const { target } = event
     
-    if ( target.closest('a') ) {
-
-        let elementNavigation = navigation.firstElementChild
-        while ( elementNavigation ) {
-            elementNavigation.style.boxShadow = "none"
-            elementNavigation = elementNavigation.nextElementSibling
-        } 
-    
-        target.style.boxShadow = "inset 0 -6px 0 rgba(189, 35, 35, 0.842)"
-            
-        const titleName = bodyElement.querySelector('.titleName')
-        titleName.classList.remove('selectorHidden')
-        titleName.textContent = target.textContent
-        titleName.setAttribute('data-name',  target.getAttribute('data-name') )
-
-        const startMessege =  bodyElement.querySelector('#start')
-            
-        if ( startMessege ) {
-            const addTask =  bodyElement.querySelector('#addTask')
-            startMessege.classList.add('selectorHidden')
-            addTask.classList.remove('selectorHidden')
-        }
-
-        bodyElement.querySelectorAll('.list').forEach(element => {
-            element.classList.add('selectorHidden')
-        });
-
-        const category = target.getAttribute('data-name')
-        listOfTask = bodyElement.querySelector( '#' + category)
-        listOfTask.classList.remove('selectorHidden')
-
-    }
-})                       
-
-let indexBackgroundImage = 1
-
-//удаление задач с использованием клавиши альт
-document.addEventListener( 'keydown' , ( event ) => {
-   
-    //console.log(event);
-    const { key } =  event
-    const { altKey } = event
-    const deleteTask = listOfTask.querySelectorAll(`li`)
-    deleteTask.forEach( (element, index )=> {
-     
-        if ( element && altKey && ( index + 1 === Number(key) ) ) {
-            //const confrimDelete = confirm(`Вы действительно хотите удалить задачу ${key} ?`)
-                
-            const modalWindow = document.createElement("div")
-            modalWindow.id =  'deleteModal'
-            modalWindow.classList.add( 'modalOverlay')
-            modalWindow.innerHTML = HTMLForModalWindow; 
-            modalWindow.firstChild.nextElementSibling.textContent = `Вы xотите удалить задачу под номером ${key} ?`
-            
-            const blackBackground = document.querySelector("#black-background")      
-            blackBackground.classList.remove( 'selectorHidden')
-
-            const buttonYes = modalWindow.querySelector(".buttonYes")
-            const buttonNo  = modalWindow.querySelector(".buttonNo")
-            console.log(modalWindow);
-            buttonYes.addEventListener( 'click',  ( event ) => {
-
-                while ( element.nextElementSibling ) {
-                    element.nextElementSibling.remove()
-                }
-                element.remove()
-                console.log(element);
-                
-                const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
-                  
-                if ( tasksToday.category == category ) { 
-                    tasksToday.array.splice(index, 1 );
-                    console.log(tasksToday);
-                    localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
-                }
-                
-                modalWindow.remove()
-                blackBackground.classList.add( 'selectorHidden')
-            
-            })
-            buttonNo.addEventListener( 'click',  ( event ) => {
-                modalWindow.remove()
-                blackBackground.classList.add( 'selectorHidden')
-            })
-            bodyElement.append(modalWindow) 
-        }
-    
-    });
-
-    if( altKey && ( key.toLocaleLowerCase() === "и" || key.toLocaleLowerCase() === "b" )  ) {
-        
-        indexBackgroundImage += 1
-        if ( indexBackgroundImage === 5 ) {
-            indexBackgroundImage = 1
-        } 
-        if ( indexBackgroundImage === 0 ) {
-            indexBackgroundImage = 4
-        }
-
-        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
-        
-    }
-})
-
-
 //функция возвращающая окно подсказки 
 const creatToolTip = (text) => {
     const toolTip = document.createElement('span')
@@ -216,171 +105,6 @@ const creatToolTip = (text) => {
     toolTip.className = 'toolTip'
     return toolTip
 }
-
-let buttonForDelete = document.querySelector('ol').querySelectorAll('#buttonForDelete')
-
-bodyElement.addEventListener( 'mouseover', (event) => {
-    const { target } = event 
-    //события наведения на подсказку 
-    if (target.closest('#buttonForDelete')) {
-        console.log(target.previousElementSibling);
-        const toolTipeHTML = creatToolTip( `Нажмите, чтобы удалить эту задачу` )
-        target.insertAdjacentElement('afterEnd',toolTipeHTML)
-    }
-})
-
-bodyElement.addEventListener( 'mouseout', (event) => {
-    const { target } = event 
-    // код для удаления подсказок
-    if (target.closest('#buttonForDelete')) {
-        target.nextElementSibling.remove()
-        }
-})
-
-bodyElement.addEventListener( 'touchend', (event) => {
-    const { target } = event  
-    //события появления модального окна
-    if (target.closest('#buttonForDelete')) {
-
-        const modalWindow = document.createElement("div")
-        modalWindow.id =  'deleteModal'
-        modalWindow.classList.add( 'modalOverlay')
-        modalWindow.innerHTML = HTMLForModalWindow; 
-
-        const blackBackground = document.querySelector("#black-background")      
-        blackBackground.classList.remove( 'selectorHidden')
-
-        const buttonYes = modalWindow.querySelector(".buttonYes")
-        const buttonNo  = modalWindow.querySelector(".buttonNo")
-
-        buttonYes.addEventListener( 'touchend',  ( event ) => {
-
-            const indexDelete =  target.previousElementSibling.id
-            const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
-
-            target.closest('div').remove()
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-
-            if ( tasksToday.category == category ) { 
-                tasksToday.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
-            }
-
-            if ( tasksWeek.category == category ) { 
-                tasksWeek.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksWeek", JSON.stringify( tasksWeek ))
-            }
-
-            if ( tasksFuture.category == category ) { 
-                tasksFuture.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksFuture", JSON.stringify( tasksFuture ))
-            }
-
-        })
-        buttonNo.addEventListener( 'touchend',  ( event ) => {
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-        })
-        bodyElement.append(modalWindow) 
-    }
-    if (target.closest('#last-background')) {
-        indexBackgroundImage -= 1 
-        if ( indexBackgroundImage === 0 ) {
-            indexBackgroundImage = 4
-        }
-
-        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
-    }
-    if (target.closest('#next-background')) {
-        indexBackgroundImage += 1
-        if ( indexBackgroundImage === 5 ) {
-            indexBackgroundImage = 1
-        } 
-        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
-    }
-}) 
-
-
-bodyElement.addEventListener( 'click' , ( event ) => {
-
-    const { target } = event 
-    
-    //события появления модального окна
-    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {
-    if (target.closest('#buttonForDelete')) {
-
-        
-        const modalWindow = document.createElement("div")
-        modalWindow.id =  'deleteModal'
-        modalWindow.classList.add( 'modalOverlay')
-        modalWindow.innerHTML = HTMLForModalWindow; 
-         
-        const blackBackground = document.querySelector("#black-background")      
-        blackBackground.classList.remove( 'selectorHidden')
-
-        const buttonYes = modalWindow.querySelector(".buttonYes")
-        const buttonNo  = modalWindow.querySelector(".buttonNo")
-
-        
-        buttonYes.addEventListener( 'click',  ( event ) => {
-
-            const indexDelete =  target.previousElementSibling.id                 
-            const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
-            
-            target.closest('div').remove()
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-
-            if ( tasksToday.category == category ) { 
-                tasksToday.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
-            }
-
-            if ( tasksWeek.category == category ) { 
-                tasksWeek.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksWeek", JSON.stringify( tasksWeek ))
-            }
-
-            if ( tasksFuture.category == category ) { 
-                tasksFuture.array.splice(indexDelete, 1 );
-                localStorage.setItem("tasksFuture", JSON.stringify( tasksFuture ))
-            }
-
-        })
-        buttonNo.addEventListener( 'click',  ( event ) => {
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-        })
-
-        bodyElement.append(modalWindow)   
-    }
-    if (target.closest('#last-background')) {
-        indexBackgroundImage -= 1 
-        if ( indexBackgroundImage === 0 ) {
-            indexBackgroundImage = 4
-        }
-
-        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
-    }
-    if (target.closest('#next-background')) {
-        indexBackgroundImage += 1
-        if ( indexBackgroundImage === 5 ) {
-            indexBackgroundImage = 1
-        } 
-        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
-    }
-    }
-    else{
-        const menuElement = bodyElement.querySelector("#menu")
-        if (target.closest('.textForAdd')) {
-            menuElement.classList.add( 'selectorHidden')
-        }
-        else {
-            menuElement.classList.remove( 'selectorHidden')
-        }
-    }
-})   
 
 //проверка введенной задачи на валидность 
 const checkTextValidation = ( text ) => {
@@ -404,17 +128,9 @@ const checkTextValidation = ( text ) => {
      return errorArray
 }
 
-const textForAdd = document.querySelector('.textForm')
-
-//событие пользователь печатает 
-textForAdd.addEventListener( 'input' , (event) => {
-   
-    const { target } = event
-    const { value } = target
+const displayError =  ( inputForm,  value , errorArray) => {
     
     const messageBoxDOM = document.querySelector('.messageAboutError')
-    const errorArray = checkTextValidation(value)
-    
     if ( errorArray[0] ) {
 
         if ( messageBoxDOM ){
@@ -426,19 +142,433 @@ textForAdd.addEventListener( 'input' , (event) => {
 
         
         newMassageBox.textContent = errorArray.join(' , ')
-        textForAdd.insertAdjacentElement('afterEnd',newMassageBox)
+        inputForm.insertAdjacentElement('afterEnd',newMassageBox)
     } 
     else if ( checkTextValidation(value) && messageBoxDOM ){
         messageBoxDOM.remove()
     }
+}
+const deleteStartMessege = () => {
+    const startMessege =  bodyElement.querySelector('#start')
+            
+        if ( startMessege ) {
+            const addTask =  bodyElement.querySelector('#addTask')
+            startMessege.classList.add('selectorHidden')
+            addTask.classList.remove('selectorHidden')
+            setTimeout(() => {  startMessege.remove()}, 1000 );
+        }
+}
 
-})
-  
-const textForm = document.querySelector('.textForm')
+const hideLabelElementNavigator = () => {
+    let elementNavigation = navigation.firstElementChild
+        while ( elementNavigation ) {
+            elementNavigation.style.boxShadow = "none"
+            elementNavigation = elementNavigation.nextElementSibling
+        } 
+}
 
-//событие пользователь добавляет задачу
-textForm.addEventListener( 'submit' , ( event ) => {
-        //console.log(event)
+const changeTitleName = (  textContent, category) => {
+    const titleName = bodyElement.querySelector('.titleName')
+    titleName.classList.remove('selectorHidden')
+    titleName.textContent = textContent
+    titleName.setAttribute('data-name',  category )
+
+}
+const showList = ( style , category ) => {
+
+    style.boxShadow = "inset 0 -6px 0 rgba(189, 35, 35, 0.842)"
+            
+    bodyElement.querySelectorAll('.list').forEach(element => {
+        element.classList.add('selectorHidden')
+    });
+   
+    listOfTask = bodyElement.querySelector( '#' + category)
+    listOfTask.classList.remove('selectorHidden')
+
+}
+
+const IsChangeBackground = (target , altKey = false, key = false) => {
+    if (target.closest('#last-background')) {
+        indexBackgroundImage -= 1 
+        if ( indexBackgroundImage === 0 ) {
+            indexBackgroundImage = 4
+        }
+
+        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
+    } 
+    if (target.closest('#next-background')) {
+        indexBackgroundImage += 1
+        if ( indexBackgroundImage === 5 ) {
+            indexBackgroundImage = 1
+        } 
+        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
+    }
+    
+    if( altKey && ( key.toLocaleLowerCase() === "и" || key.toLocaleLowerCase() === "b" )  ) {
+                
+        indexBackgroundImage += 1
+        if ( indexBackgroundImage === 5 ) {
+            indexBackgroundImage = 1
+        } 
+        if ( indexBackgroundImage === 0 ) {
+            indexBackgroundImage = 4
+        }
+
+        bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
+        
+    }
+}
+
+const addNewTask = ( newTask ) => {
+    const div = document.createElement('div')
+    const HTMLforAdd = 
+    `
+    <li id="${listOfTask.querySelectorAll('div').length }">  ${newTask .text} </li> 
+    <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
+    `
+    div.innerHTML = HTMLforAdd
+    listOfTask.append(div)
+}
+
+const deleteArrayElement = ( array = [] , indexDelete )  => {
+    array.splice(indexDelete, 1 );
+}
+
+const pushArrayElement = ( array , newTask )  => {
+    array.push(newTask) 
+}
+
+
+const changeLocalStorage = (category, argChanging, changeArray ) => {
+    if ( tasksToday.category == category ) { 
+        
+        changeArray( tasksToday.array  , argChanging )
+        localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
+    }
+
+    if ( tasksWeek.category == category ) { 
+        changeArray( tasksWeek.array  , argChanging )
+        localStorage.setItem("tasksWeek", JSON.stringify( tasksWeek ))
+    }
+
+    if ( tasksFuture.category == category ) { 
+        changeArray( tasksFuture.array  , argChanging )
+        localStorage.setItem("tasksFuture", JSON.stringify( tasksFuture ))
+    }
+
+}
+
+const createModalDelete = () =>{
+    const modalWindow = document.createElement("div")
+    modalWindow.id =  'deleteModal'
+    modalWindow.classList.add( 'modalOverlay')
+    modalWindow.innerHTML = HTMLForModalWindow; 
+    return modalWindow
+}
+
+const createBlackBackground = () =>{
+    const blackBackground = document.querySelector("#black-background")      
+    blackBackground.classList.remove( 'selectorHidden')
+    return blackBackground
+}
+
+const deleteTaskFun = ( task, modalWindow, blackBackground) => {
+    task.remove()
+    modalWindow.remove()
+    blackBackground.classList.add( 'selectorHidden')
+}
+
+const openModalTouch = ( target, modalWindow, blackBackground ) => {
+    const buttonYes = modalWindow.querySelector(".buttonYes")
+    const buttonNo  = modalWindow.querySelector(".buttonNo")
+    
+    buttonYes.addEventListener( 'touchend',  () => {
+        
+        const taskForDelete =  target.closest('div'); 
+        deleteTaskFun( taskForDelete , modalWindow, blackBackground)
+
+        const indexDelete =  target.previousElementSibling.id
+        const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
+        changeLocalStorage(category, indexDelete, deleteArrayElement)
+
+    })
+    buttonNo.addEventListener( 'touchend',  ( event ) => {
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+    })
+    bodyElement.append(modalWindow) 
+}
+
+const openModalkClick = ( target, modalWindow, blackBackground ) => {
+    const buttonYes = modalWindow.querySelector(".buttonYes")
+    const buttonNo  = modalWindow.querySelector(".buttonNo")
+    
+    buttonYes.addEventListener( 'click',  () => {
+        
+        const taskForDelete =  target.closest('div'); 
+        deleteTaskFun( taskForDelete , modalWindow, blackBackground)
+
+        const indexDelete =  target.previousElementSibling.id
+        const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
+        changeLocalStorage(category, indexDelete, deleteArrayElement)
+
+    })
+    buttonNo.addEventListener( 'click',  ( event ) => {
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+    })
+    bodyElement.append(modalWindow) 
+}
+
+const isDeletingTaskKeyboard = ( modalWindow, blackBackground, element, index ) => {
+    const buttonYes = modalWindow.querySelector(".buttonYes")
+    const buttonNo  = modalWindow.querySelector(".buttonNo")
+
+    buttonYes.addEventListener( 'click',  ( event ) => {
+
+        while ( element.nextElementSibling ) {
+            element.nextElementSibling.remove()
+        }
+        element.remove()
+        
+        const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
+        
+        changeLocalStorage(category, index, deleteArrayElement)
+        
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+        keydownUsing = false;
+    })
+    buttonNo.addEventListener( 'click',  ( event ) => {
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+        keydownUsing = false;
+    })
+    bodyElement.append(modalWindow) 
+}
+const isClickDeleteTask = (target) =>{
+    if (target.closest('#buttonForDelete')) {
+
+        const modalWindow = createModalDelete()
+        const blackBackground = createBlackBackground()
+        openModalkClick( target, modalWindow, blackBackground )
+    }
+}
+
+const isTouchDeleteTask = (target) =>{
+    if (target.closest('#buttonForDelete')) {
+
+        const modalWindow = createModalDelete()
+        const blackBackground = createBlackBackground()
+        openModalTouch( target, modalWindow, blackBackground )
+    }
+}
+
+const isSmartPhoneInput = (target) => {
+    const menuElement = bodyElement.querySelector("#menu")
+    if (target.closest('.inputForm')) {
+        menuElement.classList.add( 'selectorHidden')
+    }
+    else {
+        menuElement.classList.remove( 'selectorHidden')
+    }
+}
+
+const ckickToNavigator = async (event) => {
+
+    const { target } = event
+        
+    if ( target.closest('a') ) {
+
+        const category = target.getAttribute('data-name')
+
+        deleteStartMessege()
+        hideLabelElementNavigator()
+        changeTitleName( target.textContent , category )
+        showList(target.style, category)
+        
+    }
+}
+
+const PressKeyboard = (event) => {
+            //console.log(event);
+            const { key } =  event
+            const { altKey } = event
+            const { target } = event
+            const deleteTask = listOfTask.querySelectorAll(`li`)
+            const startMessege =  bodyElement.querySelector('#start')
+            
+            
+            if ( !startMessege && !keydownUsing ) {
+            
+                deleteTask.forEach( (element, index )=> {
+            
+                    if ( element && altKey && ( index + 1 === Number(key) ) ) {
+                        //const confrimDelete = confirm(`Вы действительно хотите удалить задачу ${key} ?`)
+                            
+                        const modalWindow = createModalDelete()
+                        const blackBackground = createBlackBackground()
+                        keydownUsing = true;
+                        isDeletingTaskKeyboard(modalWindow, blackBackground, element, index)
+                    }
+                
+                });
+            }
+               
+            IsChangeBackground(target , altKey, key)
+}
+
+const touchSmartPhone = ( event ) => {
+    const { target } = event  
+    //события появления модального окна
+   isTouchDeleteTask(target) 
+   IsChangeBackground(target)
+   isSmartPhoneInput(target)
+}
+
+const clickPC = ( event ) => {
+        const { target } = event 
+    //события появления модального окна
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {
+        isClickDeleteTask(target) 
+        IsChangeBackground(target)
+        } 
+}
+const userSubmitTask = ( event ) => {
+     
+     event.preventDefault()
+     const { target } = event
+     if (target.nameTask.value) {
+         
+         const newTask = {
+             text: `${target.nameTask.value.trim()}`,
+         }
+
+         const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
+               
+        changeLocalStorage(category, newTask, pushArrayElement)
+        addNewTask(newTask)
+     }
+}
+
+const Controler = {
+    
+const isDeletingTaskKeyboard = ( modalWindow, blackBackground, element, index ) => {
+    const buttonYes = modalWindow.querySelector(".buttonYes")
+    const buttonNo  = modalWindow.querySelector(".buttonNo")
+
+    buttonYes.addEventListener( 'click',  ( event ) => {
+
+        while ( element.nextElementSibling ) {
+            element.nextElementSibling.remove()
+        }
+        element.remove()
+        
+        const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
+        
+        changeLocalStorage(category, index, deleteArrayElement)
+        
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+        keydownUsing = false;
+    })
+    buttonNo.addEventListener( 'click',  ( event ) => {
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+        keydownUsing = false;
+    })
+    bodyElement.append(modalWindow) 
+}
+const isClickDeleteTask = (target) =>{
+    if (target.closest('#buttonForDelete')) {
+
+        const modalWindow = createModalDelete()
+        const blackBackground = createBlackBackground()
+        openModalkClick( target, modalWindow, blackBackground )
+    }
+}
+
+const isTouchDeleteTask = (target) =>{
+    if (target.closest('#buttonForDelete')) {
+
+        const modalWindow = createModalDelete()
+        const blackBackground = createBlackBackground()
+        openModalTouch( target, modalWindow, blackBackground )
+    }
+}
+
+const isSmartPhoneInput = (target) => {
+    const menuElement = bodyElement.querySelector("#menu")
+    if (target.closest('.inputForm')) {
+        menuElement.classList.add( 'selectorHidden')
+    }
+    else {
+        menuElement.classList.remove( 'selectorHidden')
+    }
+}
+
+const ckickToNavigator = async (event) => {
+
+    const { target } = event
+        
+    if ( target.closest('a') ) {
+
+        const category = target.getAttribute('data-name')
+
+        deleteStartMessege()
+        hideLabelElementNavigator()
+        changeTitleName( target.textContent , category )
+        showList(target.style, category)
+        
+    }
+}
+
+    PressKeyboard(event) {
+        //console.log(event);
+        const { key } =  event
+        const { altKey } = event
+        const { target } = event
+        const deleteTask = listOfTask.querySelectorAll(`li`)
+        const startMessege =  bodyElement.querySelector('#start')
+        
+        
+        if ( !startMessege && !keydownUsing ) {
+        
+            deleteTask.forEach( (element, index )=> {
+        
+                if ( element && altKey && ( index + 1 === Number(key) ) ) {
+                    //const confrimDelete = confirm(`Вы действительно хотите удалить задачу ${key} ?`)
+                        
+                    const modalWindow = createModalDelete()
+                    const blackBackground = createBlackBackground()
+                    keydownUsing = true;
+                    isDeletingTaskKeyboard(modalWindow, blackBackground, element, index)
+                }
+            
+            });
+        }
+        
+        IsChangeBackground(target , altKey, key)
+    },
+
+    touchSmartPhone( event ){
+    const { target } = event  
+        //события появления модального окна
+        isTouchDeleteTask(target) 
+        IsChangeBackground(target)
+        isSmartPhoneInput(target)
+    },
+
+    clickPC( event ){
+        const { target } = event 
+        //события появления модального окна
+        if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {
+            isClickDeleteTask(target) 
+            IsChangeBackground(target)
+            } 
+    },
+    userSubmitTask( event ) {
+     
         event.preventDefault()
         const { target } = event
         if (target.nameTask.value) {
@@ -448,32 +578,84 @@ textForm.addEventListener( 'submit' , ( event ) => {
             }
 
             const category = bodyElement.querySelector('.titleName').getAttribute('data-name') 
-                  
-            if ( tasksToday.category == category ) { 
-                tasksToday.array.push(newTask)
-                localStorage.setItem("tasksToday", JSON.stringify( tasksToday ))
-            }
-            if ( tasksWeek.category == category ) {  
-                tasksWeek.array.push(newTask) 
-                localStorage.setItem("tasksWeek", JSON.stringify( tasksWeek ))
-            }
-            if ( tasksFuture.category == category ) {  
-                tasksFuture .array.push(newTask)
-                localStorage.setItem("tasksFuture", JSON.stringify( tasksFuture ))
-            }
-            
-            const div = document.createElement('div')
-            const HTMLforAdd = 
-            `
-            <li id="${listOfTask.querySelectorAll('div').length }">  ${newTask .text} </li> 
-            <button  class="button"  type = 'submit' id = "buttonForDelete"> Удалить  </button>
-            `
-            div.innerHTML = HTMLforAdd
-            buttonForDelete = document.querySelector('ol').querySelectorAll('#buttonForDelete') 
-            listOfTask.append(div)
+                
+            changeLocalStorage(category, newTask, pushArrayElement)
+            addNewTask(newTask)
         }
-})
+},
 
 
+}
+const userInputTask = (event , inputForm) => {
+    const { target } = event
+    const { value } = target
+    
+    const errorArray = checkTextValidation(value)
+    displayError( inputForm, value, errorArray)
+    
+}
 
+const app = {
+    init() {
+        this.event()
+        this.main()
+    },
+    main() {
+        renderTasks( tasksToday.array , "today")
+        renderTasks( tasksWeek.array , "week")
+        renderTasks( tasksFuture.array , "future")
+    },
+    event(){
+        navigation.addEventListener(  'click' , ( event ) => {
+            ckickToNavigator(event)
+        })
+
+        
+        //удаление задач с использованием клавиши альт
+        document.addEventListener( 'keydown' , ( event ) => {
+            Controler.PressKeyboard(event)
+        })
+
+        
+        bodyElement.addEventListener( 'touchend', (event) => {
+            touchSmartPhone(event)
+        }) 
+
+
+        bodyElement.addEventListener( 'click' , ( event ) => {
+            Controler.clickPC(event);
+        })   
+
+        const inputForm = document.querySelector('.textForm')
+        inputForm.addEventListener( 'input' , (event) => {
+            userInputTask(event, inputForm )
+        })
+        
+        const textForm = document.querySelector('.textForm')
+        textForm.addEventListener( 'submit' , ( event ) => {
+            Controler.userSubmitTask(event)
+        })
+
+        bodyElement.addEventListener( 'mouseover', (event) => {
+            const { target } = event 
+            //события наведения на подсказку 
+            if (target.closest('#buttonForDelete')) {
+                console.log(target.previousElementSibling);
+                const toolTipeHTML = creatToolTip( `Нажмите, чтобы удалить эту задачу` )
+                target.insertAdjacentElement('afterEnd',toolTipeHTML)
+            }
+        })
+        
+        bodyElement.addEventListener( 'mouseout', (event) => {
+            const { target } = event 
+            // код для удаления подсказок
+            if (target.closest('#buttonForDelete')) {
+                target.nextElementSibling.remove()
+                }
+        })
+
+    }
+}
+
+app.init()
     
