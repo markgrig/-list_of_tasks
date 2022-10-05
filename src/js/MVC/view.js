@@ -1,11 +1,17 @@
 
 import { Model } from "./model"
 
-export const Vie = {
+export const View = {
     data: {
         bodyElement: document.querySelector('body'),
         navigation: document.querySelector('.navigator'),
         listOfTask: document.querySelector('.list'),
+    },
+    hideLoading(){
+        const loadingElement =  this.data.bodyElement.querySelector(".loading")
+        const appElement = this.data.bodyElement.querySelector(".app")
+        loadingElement.remove()
+        appElement.classList.remove('selectorHidden')
     },
     renderTasks(tasks, category) {
 

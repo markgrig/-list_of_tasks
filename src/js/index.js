@@ -4,9 +4,8 @@ import "../img/background2.jpg"
 import "../img/background3.jpg" 
 import "../img/background4.jpg"
 import { Model } from "./MVC/model"
-import { Vie } from "./MVC/vie"
+import { View } from "./MVC/view"
 import { Controler } from "./MVC/controler"
-
 
 const app = {
     init() {
@@ -14,13 +13,19 @@ const app = {
         this.main()
     },
     main() {
-        Vie.data.bodyElement.style.backgroundImage = `url(./img/background${Model.data.indexBackgroundImage}.jpg)`
-        Vie.renderTasks( Model.data.tasksToday.array , "today")
-        Vie.renderTasks( Model.data.tasksWeek.array , "week")
-        Vie.renderTasks( Model.data.tasksFuture.array , "future")
+        View.data.bodyElement.style.backgroundImage = `url(./img/background${Model.data.indexBackgroundImage}.jpg)`
+        
+        window.addEventListener( 'load' , ( event ) => {
+            View.hideLoading();
+        })
+
+
+        View.renderTasks( Model.data.tasksToday.array , "today")
+        View.renderTasks( Model.data.tasksWeek.array , "week")
+        View.renderTasks( Model.data.tasksFuture.array , "future")
     },
     event(){
-        Vie.data.navigation.addEventListener(  'click' , ( event ) => {
+        View.data.navigation.addEventListener(  'click' , ( event ) => {
             Controler.ckickToNavigator(event)
         })
 
@@ -31,12 +36,12 @@ const app = {
         })
 
         
-        Vie.data.bodyElement.addEventListener( 'touchend', (event) => {
+        View.data.bodyElement.addEventListener( 'touchend', (event) => {
             Controler.touchSmartPhone(event)
         }) 
 
 
-        Vie.data.bodyElement.addEventListener( 'click' , ( event ) => {
+        View.data.bodyElement.addEventListener( 'click' , ( event ) => {
             Controler.clickPC(event);
         })   
 
@@ -50,12 +55,12 @@ const app = {
             Controler.userSubmitTask(event)
         })
 
-        Vie.data.bodyElement.addEventListener( 'mouseover', (event) => {
-            Vie.showToolTip(event)
+        View.data.bodyElement.addEventListener( 'mouseover', (event) => {
+            View.showToolTip(event)
         })
         
-        Vie.data.bodyElement.addEventListener( 'mouseout', (event) => {
-            Vie.removeToolTip(event)
+        View.data.bodyElement.addEventListener( 'mouseout', (event) => {
+            View.removeToolTip(event)
         })
 
     }

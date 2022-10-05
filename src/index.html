@@ -8,39 +8,50 @@
     <title> Список задач </title>
 </head>
 
+
+
 <body>
 
-<header>
-    <nav class="flexClass navigator">
-        <a data-name="today"> Задачи на Cегодня </a>
-        <a data-name="week"> Задачи на Неделю </a>
-        <a data-name="future"> Задачи на Потом </a>
-    </nav>
-</header>
+    <div class="loading">
+        <div class="loading-block"> </div>
+        <h3> loading </h3> 
+        <div class="loading-block"> </div>
+    </div>
 
-<div class="modalOverlay" id = "start">
-    <h2 > Добро пожаловать! </h2>
-    <h3 > Выбирите категорию списка задач в верхнем меню. </h3>
-</div>
+    <div class="app selectorHidden">
 
- <h2 class="titleName selectorHidden"> Название категории </h2>
-
-<form class ="flexClass textForm selectorHidden" id = "addTask">
-
-    <textarea class="inputForm" placeholder="Посмотреть урок по JavaScript" name = "nameTask" type = "text"></textarea>
-    <button  class="button" type = 'submit' id = "button-for-create"> Cоздать  </button>
-
-</form>
-
-<ol class="list selectorHidden" id = "today" ></ol>
-<ol class="list selectorHidden" id ="week"></ol>
-<ol class="list selectorHidden" id ="future"></ol>
-
-<div class="selectorHidden" id = "black-background"></div>
-<div class = "flexClass menu" id="menu">
-    <button class = "button" id = "last-background" > LAST </button>
-    <button class = "button" id = "next-background"> NEXT </button>
-</div>
+        <header>
+            <nav class="flexClass navigator">
+                <a data-name="today"> Задачи на Cегодня </a>
+                <a data-name="week"> Задачи на Неделю </a>
+                <a data-name="future"> Задачи на Потом </a>
+            </nav>
+        </header>
+    
+        <div class="modalOverlay" id = "start">
+            <h2 > Добро пожаловать! </h2>
+            <h3 > Выбирите категорию списка задач в верхнем меню. </h3>
+        </div>
+    
+        <h2 class="titleName selectorHidden"> Название категории </h2>
+    
+        <form class ="flexClass textForm selectorHidden" id = "addTask">
+    
+            <textarea class="inputForm" placeholder="Посмотреть урок по JavaScript" name = "nameTask" type = "text"></textarea>
+            <button  class="button" type = 'submit' id = "button-for-create"> Cоздать  </button>
+    
+        </form>
+    
+        <ol class="list selectorHidden" id = "today" ></ol>
+        <ol class="list selectorHidden" id ="week"></ol>
+        <ol class="list selectorHidden" id ="future"></ol>
+    
+        <div class="selectorHidden" id = "black-background"></div>
+        <div class = "flexClass menu" id="menu">
+            <button class = "button" id = "last-background" > LAST </button>
+            <button class = "button" id = "next-background"> NEXT </button>
+        </div>  
+    </div>
 </body>
 
 </html>

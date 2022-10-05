@@ -1,4 +1,4 @@
-import { Vie } from "./vie"
+import { View } from "./view"
 
 
 export const Model = {
@@ -97,7 +97,7 @@ export const Model = {
             }
         } 
         else {
-            const arrayTasks = Vie.data.listOfTask.querySelectorAll(`li`)
+            const arrayTasks = View.data.listOfTask.querySelectorAll(`li`)
             const searchTask =  [...arrayTasks ].some( el => { return el.textContent.toLocaleLowerCase().trim() === text.toLocaleLowerCase().trim()   } )
             
             if ( searchTask ){
