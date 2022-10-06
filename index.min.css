@@ -10,7 +10,6 @@ body{
     background-attachment: fixed;
      margin: 0;
 }
-
 html{
     box-sizing: border-box;
     padding: 0px 0px 0px 0px;
@@ -20,7 +19,56 @@ hr {
     height: 1px;
     background-color: rgba(34, 67, 144, 0.862);
 }
+ .loading {
+    font-size: 50px;
+    text-align: center;
+    margin: auto;
+    margin-top: 50vh;
+    color: white;
+ }
 
+ .loading h3 {
+    margin: auto;
+    width: 250px;
+    height: 80px;
+    border: solid 3px white;
+    border-radius: 100px;
+    animation: square 1s infinite ease;
+    background: linear-gradient(60deg, rgb(246, 0, 0), rgb(132, 121, 255) , rgb(246, 0, 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 2px rgb(255, 217, 2);
+ } 
+
+ .loading-block {
+    margin: auto;
+    width: 400px; 
+    height: 10px;
+    background: linear-gradient(45deg, rgb(246, 0, 0), rgb(23, 4, 228) , rgb(246, 0, 0));
+    border: solid 1px white;
+    border-radius: 5px;
+    animation: square 1s infinite ease;
+    box-shadow: 0 0 10px 2px white;
+ }
+
+@keyframes square {
+    from {
+        width: 60%;
+        box-shadow: 0 0 30px 2px rgba(253, 253, 253, 0.804);
+    }
+    50% {
+        width: 80%;
+        box-shadow: 0 0 1px 2px white;
+    }
+    to {
+        width: 45%;   
+        box-shadow: 0 0 1px 2px rgb(2, 27, 255);             
+    }
+    
+}
+
+ 
 .titleName {
     border-radius: 7px;
     text-align: center;
