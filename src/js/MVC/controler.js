@@ -6,31 +6,20 @@ export const Controler = {
     data: {
         keydownUsing: false
     },
-    isDeletingTaskKeyboard( modalWindow, blackBackground, element, index ) {
-        const buttonYes = modalWindow.querySelector(".buttonYes")
-        const buttonNo  = modalWindow.querySelector(".buttonNo")
+    ckickToNavigator(event){
 
-        buttonYes.addEventListener( 'click',  ( event ) => {
+        const { target } = event
+            
+        if ( target.closest('a') ) {
 
-            while ( element.nextElementSibling ) {
-                element.nextElementSibling.remove()
-            }
-            element.remove()
+            const category = target.getAttribute('data-name')
+
+            View.deleteStartMessege()
+            View.hideLabelElementNavigator()
+            View.changeTitleName( target.textContent , category )
+            View.showList(target.style, category)
             
-            const category = View.data.bodyElement.querySelector('.titleName').getAttribute('data-name') 
-            
-            Model.changeLocalStorage(category, index,  Model.deleteArrayElement)
-            
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-            this.data.keydownUsing = false;
-        })
-        buttonNo.addEventListener( 'click',  ( event ) => {
-            modalWindow.remove()
-            blackBackground.classList.add( 'selectorHidden')
-            this.data.keydownUsing = false;
-        })
-        View.data.bodyElement.append(modalWindow) 
+        }
     },
     isClickDeleteTask(target){
         if (target.closest('#buttonForDelete')) {
@@ -60,20 +49,31 @@ export const Controler = {
         }
     },
 
-    ckickToNavigator(event){
+    isDeletingTaskKeyboard( modalWindow, blackBackground, element, index ) {
+        const buttonYes = modalWindow.querySelector(".buttonYes")
+        const buttonNo  = modalWindow.querySelector(".buttonNo")
 
-        const { target } = event
+        buttonYes.addEventListener( 'click',  ( event ) => {
+
+            while ( element.nextElementSibling ) {
+                element.nextElementSibling.remove()
+            }
+            element.remove()
             
-        if ( target.closest('a') ) {
-
-            const category = target.getAttribute('data-name')
-
-            View.deleteStartMessege()
-            View.hideLabelElementNavigator()
-            View.changeTitleName( target.textContent , category )
-            View.showList(target.style, category)
+            const category = View.data.bodyElement.querySelector('.titleName').getAttribute('data-name') 
             
-        }
+            Model.changeLocalStorage(category, index,  Model.deleteArrayElement)
+            
+            modalWindow.remove()
+            blackBackground.classList.add( 'selectorHidden')
+            this.data.keydownUsing = false;
+        })
+        buttonNo.addEventListener( 'click',  ( event ) => {
+            modalWindow.remove()
+            blackBackground.classList.add( 'selectorHidden')
+            this.data.keydownUsing = false;
+        })
+        View.data.bodyElement.append(modalWindow) 
     },
 
     PressKeyboard(event) {
@@ -122,7 +122,6 @@ export const Controler = {
             this.IsChangeBackground(target)
             this.isSmartPhoneInput(target)
     },
-
     clickPC( event ){
         const { target } = event 
         //события появления модального окна

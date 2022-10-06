@@ -14,6 +14,16 @@ export const View = {
         appElement.classList.remove('selectorHidden')
         appElement.id = "start"
     },
+    deleteStartMessege() {
+    const startMessege =  this.data.bodyElement.querySelector('#start')
+            
+        if ( startMessege ) {
+            const addTask =  this.data.bodyElement.querySelector('#addTask')
+            startMessege.classList.add('selectorHidden')
+            addTask.classList.remove('selectorHidden')
+            setTimeout(() => {  startMessege.remove()}, 1000 );
+        }
+    },
     renderTasks(tasks, category) {
 
         const listCategory= this.data.bodyElement.querySelector('#'+ category)  
@@ -32,47 +42,6 @@ export const View = {
         })
 
     }, 
-    
-    //функция возвращающая окно подсказки 
-    creatToolTip(text) {
-        const toolTip = document.createElement('span')
-        toolTip.textContent = text
-        toolTip.className = 'toolTip'
-        return toolTip
-    },
-
-    //проверка введенной задачи на валидность 
-    displayError( inputForm,  value , errorArray) {
-    
-        const messageBoxDOM = document.querySelector('.messageAboutError')
-        if ( errorArray[0] ) {
-
-            if ( messageBoxDOM ){
-                messageBoxDOM.remove()
-            }
-
-            const newMassageBox = document.createElement('span')
-            newMassageBox.className = 'messageAboutError'
-
-            
-            newMassageBox.textContent = errorArray.join(' , ')
-            inputForm.insertAdjacentElement('afterEnd',newMassageBox)
-        } 
-        else if (  Model.checkValidation(value) && messageBoxDOM ){
-            messageBoxDOM.remove()
-        }
-    },
-    deleteStartMessege() {
-    const startMessege =  this.data.bodyElement.querySelector('#start')
-            
-        if ( startMessege ) {
-            const addTask =  this.data.bodyElement.querySelector('#addTask')
-            startMessege.classList.add('selectorHidden')
-            addTask.classList.remove('selectorHidden')
-            setTimeout(() => {  startMessege.remove()}, 1000 );
-        }
-    },
-
     hideLabelElementNavigator() {
         let elementNavigation = this.data.navigation.firstElementChild
             while ( elementNavigation ) {
@@ -80,7 +49,6 @@ export const View = {
                 elementNavigation = elementNavigation.nextElementSibling
             } 
     },
-
     changeTitleName(  textContent, category) {
         const titleName = this.data.bodyElement.querySelector('.titleName')
         titleName.classList.remove('selectorHidden')
@@ -122,19 +90,11 @@ export const View = {
         modalWindow.innerHTML = HTMLForModalWindow; 
         return modalWindow
     },
-    
     createBlackBackground() {
         const blackBackground = document.querySelector("#black-background")      
         blackBackground.classList.remove( 'selectorHidden')
         return blackBackground
     },
-    
-    deleteTaskFun ( task, modalWindow, blackBackground){
-        task.remove()
-        modalWindow.remove()
-        blackBackground.classList.add( 'selectorHidden')
-    },
-    
     openModalTouch( target, modalWindow, blackBackground ){
         const buttonYes = modalWindow.querySelector(".buttonYes")
         const buttonNo  = modalWindow.querySelector(".buttonNo")
@@ -179,6 +139,11 @@ export const View = {
         })
         this.data.bodyElement.append(modalWindow) 
     },
+    deleteTaskFun ( task, modalWindow, blackBackground){
+        task.remove()
+        modalWindow.remove()
+        blackBackground.classList.add( 'selectorHidden')
+    },
     
     ChangeBackground( button ) {
         console.log(123);
@@ -202,6 +167,13 @@ export const View = {
         Model.data.indexBackgroundImage = indexBackgroundImage;
         Model.saveInLocalStorige(indexBackgroundImage , "indexBackgroundImage")
     },
+      //функция возвращающая окно подсказки 
+      creatToolTip(text) {
+        const toolTip = document.createElement('span')
+        toolTip.textContent = text
+        toolTip.className = 'toolTip'
+        return toolTip
+    },
     showToolTip(event) {
         const { target } = event 
             //события наведения на подсказку 
@@ -217,6 +189,27 @@ export const View = {
             if (target.closest('#buttonForDelete')) {
                 target.nextElementSibling.remove()
                 }
-    }
+    },
+    //проверка введенной задачи на валидность 
+    displayError( inputForm,  value , errorArray) {
+    
+        const messageBoxDOM = document.querySelector('.messageAboutError')
+        if ( errorArray[0] ) {
+
+            if ( messageBoxDOM ){
+                messageBoxDOM.remove()
+            }
+
+            const newMassageBox = document.createElement('span')
+            newMassageBox.className = 'messageAboutError'
+
+            
+            newMassageBox.textContent = errorArray.join(' , ')
+            inputForm.insertAdjacentElement('afterEnd',newMassageBox)
+        } 
+        else if (  Model.checkValidation(value) && messageBoxDOM ){
+            messageBoxDOM.remove()
+        }
+    },
     
 }
