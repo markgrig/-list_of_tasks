@@ -8,10 +8,11 @@ export const View = {
         listOfTask: document.querySelector('.list'),
     },
     hideLoading(){
-        const loadingElement =  this.data.bodyElement.querySelector(".loading")
+        const loadingElement =  this.data.bodyElement.querySelector(".box-loading")
         const appElement = this.data.bodyElement.querySelector(".app")
-        loadingElement.remove()
+        loadingElement.classList.add('selectorHidden')
         appElement.classList.remove('selectorHidden')
+        appElement.id = "start"
     },
     renderTasks(tasks, category) {
 

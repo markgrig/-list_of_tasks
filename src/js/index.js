@@ -15,9 +15,9 @@ const app = {
     main() {
         View.data.bodyElement.style.backgroundImage = `url(./img/background${Model.data.indexBackgroundImage}.jpg)`
         
-        window.addEventListener( 'load' , ( event ) => {
+        /*window.addEventListener( 'load' , ( event ) => {
             View.hideLoading();
-        })
+        })*/
 
 
         View.renderTasks( Model.data.tasksToday.array , "today")
