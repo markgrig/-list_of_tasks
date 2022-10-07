@@ -4,13 +4,14 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-     margin: 0;
-}
+    margin: 0;
+    
+}    
 html{
     box-sizing: border-box;
     padding: 0px 0px 0px 0px;
+  
 }
-
 hr {
     width: 80%;
     height: 1px;
