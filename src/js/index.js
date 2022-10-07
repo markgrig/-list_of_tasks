@@ -14,6 +14,7 @@ const app = {
     },
     main() {
         View.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[Model.data.indexBackgroundImage-1]}')`
+        Controler.isSmartPhoneRotation()
         View.renderTasks( Model.data.tasksToday.array , "today")
         View.renderTasks( Model.data.tasksWeek.array , "week")
         View.renderTasks( Model.data.tasksFuture.array , "future")
@@ -57,6 +58,10 @@ const app = {
             View.removeToolTip(event)
         })
 
+        window.addEventListener("orientationchange", () => {
+            View.changeModalWindowForRotating() 
+        }, false);
+        
     }
 }
 

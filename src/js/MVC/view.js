@@ -215,5 +215,11 @@ export const View = {
             messageBoxDOM.remove()
         }
     },
-    
+    changeModalWindowForRotating() {
+        if ( window.screen.width > 700 ) {
+            document.querySelector(".modalOverlay").style.height = "50%"
+        } else {
+            document.querySelector(".modalOverlay").style.height = "25%"
+        }
+    },
 }

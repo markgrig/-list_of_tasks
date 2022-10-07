@@ -218,13 +218,13 @@ hr {
     top: 0;
     bottom: 0;
     width: 40%;
-    height: 25%;
     margin: auto;
-    padding: 2%;
     background-color:  rgba(34, 67, 144, 0.862);
     border: 1px solid white; 
     transition: 0.2s ease;
     opacity: 1;
+    height: 25%;
+    padding: 20px;
 }
 
 #start {

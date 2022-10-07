@@ -4,7 +4,8 @@ import { View } from "./view"
 
 export const Controler = {
     data: {
-        keydownUsing: false
+        keydownUsing: false,
+        previousOrientation: "",
     },
     ckickToNavigator(event){
 
@@ -121,6 +122,15 @@ export const Controler = {
             this.isTouchDeleteTask(target) 
             this.IsChangeBackground(target)
             this.isSmartPhoneInput(target)
+        
+        if ( window.screen.width > 700 ) {
+            View.changeModalWindowForRotating()
+        }
+    },
+    isSmartPhoneRotation(){
+        if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {      
+                View.changeModalWindowForRotating()
+      }
     },
     clickPC( event ){
         const { target } = event 
