@@ -6,20 +6,14 @@ import "../img/background4.jpg"
 import { Model } from "./MVC/model"
 import { View } from "./MVC/view"
 import { Controler } from "./MVC/controler"
-
+//localStorage.clear()
 const app = {
     init() {
         this.event()
         this.main()
     },
     main() {
-        View.data.bodyElement.style.backgroundImage = `url(./img/background${Model.data.indexBackgroundImage}.jpg)`
-        
-        /*window.addEventListener( 'load' , ( event ) => {
-            View.hideLoading();
-        })*/
-
-
+        View.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[Model.data.indexBackgroundImage-1]}')`
         View.renderTasks( Model.data.tasksToday.array , "today")
         View.renderTasks( Model.data.tasksWeek.array , "week")
         View.renderTasks( Model.data.tasksFuture.array , "future")

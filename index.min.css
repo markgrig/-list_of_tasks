@@ -3,7 +3,6 @@
   \*********************************************************************/
 body{
     background-color: rgba(0, 0, 0, 0.95);
-    background-image: url(1a54a36ae7cec1854b13.jpg    );
     background-position: 50% 0%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -14,6 +13,7 @@ html{
     box-sizing: border-box;
     padding: 0px 0px 0px 0px;
 }
+
 hr {
     width: 80%;
     height: 1px;
@@ -24,27 +24,14 @@ hr {
     margin: auto;
     font-size: 50px;
     text-align: center;
-    padding: 30vh;
 }
  .loading {
     position: absolute;  
     left: 50%;
     top: 50%;
     transform: translate( -50%, -50%);
-    width: 100px;
-    height: 100px;
- }
-
- .box-loading h3 {
-    overflow: hidden;
-    margin: auto;
-    width: 250px;
-    height: 80px;
-    animation: square 2s infinite ease;
-    background: linear-gradient(60deg, rgb(245, 245, 245), rgb(246, 0, 0),  rgb(255, 255, 0), rgb(255, 255, 255));
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: rgba(0, 0, 0, 0.2);
+    width: 150px;
+    height: 150px;
  }
 
  .loading hr {
@@ -53,32 +40,23 @@ hr {
     height: 40%;
     border: solid 2px black;
     margin: 0;
-    border-radius:  50%;
-    animation: spin 2s infinite ease;
+    border-radius:  10%;
+    animation: spin 1s infinite ease;
  }
  .loading :nth-child(1) {
-    background-color: green;
-    animation-delay: -1.5s;
+    background-color: rgba(0, 128, 0, 0.463);
+    animation-delay: -0.25s;
  }
  .loading :nth-child(2){
-    background-color: red;
-    animation-delay: -1s;
-}
-.loading :nth-child(3){
-    background-color: yellow;
+    background-color: rgba(255, 0, 0, 0.465);
     animation-delay: -0.5s;
 }
-.loading :nth-child(4){
-    background-color: purple;
+.loading :nth-child(3){
+    background-color: rgba(255, 255, 0, 0.435);
+    animation-delay: -0.75s;
 }
-
-@keyframes square {
-    from, to {
-        width: 200px;
-    }
-    50% {
-         width: 400px;
-    } 
+.loading :nth-child(4){
+    background-color: rgba(128, 0, 128, 0.455);
 }
 @keyframes spin {
     0%,100%{
@@ -113,6 +91,7 @@ hr {
     border-radius: 7px;
     justify-content: space-around;
     background: rgba(34, 67, 144, 0.862);
+    animation: start 0.5s ease;
 }
 
 .navigator a{
@@ -313,7 +292,7 @@ hr {
     width: 100vw ;
     height: 10vh;
     padding: 0px 0px 0px 0px;
-    transition: 1s;
+    animation: start 0.5s ease;
 }
 #last-background{
     pointer-events: all;

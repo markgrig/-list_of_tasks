@@ -12,11 +12,15 @@ export const View = {
         const appElement = this.data.bodyElement.querySelector(".app")
         loadingElement.classList.add('selectorHidden')
         appElement.classList.remove('selectorHidden')
-        appElement.id = "start"
+    },
+    showLoading(){
+        const loadingElement =  this.data.bodyElement.querySelector(".box-loading")
+        const appElement = this.data.bodyElement.querySelector(".app")
+        loadingElement.classList.remove('selectorHidden')
+        appElement.classList.add('selectorHidden')
     },
     deleteStartMessege() {
     const startMessege =  this.data.bodyElement.querySelector('#start')
-            
         if ( startMessege ) {
             const addTask =  this.data.bodyElement.querySelector('#addTask')
             startMessege.classList.add('selectorHidden')
@@ -146,7 +150,7 @@ export const View = {
     },
     
     ChangeBackground( button ) {
-        console.log(123);
+        
         let indexBackgroundImage = Model.data.indexBackgroundImage;
         
         if ( button === 'last') {
@@ -162,8 +166,8 @@ export const View = {
                     indexBackgroundImage = 1
                 } 
         }
-       
-        this.data.bodyElement.style.backgroundImage = `url(./img/background${indexBackgroundImage}.jpg)`
+        
+        this.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[indexBackgroundImage-1]}')`
         Model.data.indexBackgroundImage = indexBackgroundImage;
         Model.saveInLocalStorige(indexBackgroundImage , "indexBackgroundImage")
     },
