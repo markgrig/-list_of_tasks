@@ -1,8 +1,4 @@
 import "../css/style.css"
-import "../img/background1.jpg" 
-import "../img/background2.jpg" 
-import "../img/background3.jpg" 
-import "../img/background4.jpg"
 import { Model } from "./MVC/model"
 import { View } from "./MVC/view"
 import { Controler } from "./MVC/controler"

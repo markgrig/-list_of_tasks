@@ -8,13 +8,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     rules: [
       { test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
       { test: /\.(js)$/, use: 'babel-loader' },
+      //загрузка картнинок ( сейчас фон в base64)
+      /*
       {
         test: /\.(jpe?g|png|gif|svg)$/i, 
         loader: 'file-loader',
         options: {
           name: './img/[name].[ext]', 
         }
-    }     
+      
+    } */    
     ]
   },
   entry: {
