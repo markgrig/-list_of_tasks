@@ -31,12 +31,7 @@ export const Model = {
     checkValidation( text ) {
         const errorArray = []
         if ( !text ) {
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                errorArray.push('Пустое поле!') 
-            }
-            else {
-                errorArray.push('Пустое поле для добавления задачи!') 
-            }
+            errorArray.push('Пустое поле!') 
         } 
         else {
             const arrayTasks = View.data.listOfTask.querySelectorAll(`li`)

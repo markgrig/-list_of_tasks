@@ -1,7 +1,7 @@
 body{
     background-color: rgba(0, 0, 0, 0.95);
-    background-position: 50% 0%;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin: 0;
@@ -187,7 +187,7 @@ hr {
     left: 82%;
     color: rgb(255, 255, 255);
     border-color: brown;
-    background-color: rgba(255, 235, 205, 0.603);
+    background-color: rgba(255, 235, 205, 0.3);
     box-shadow: 3px 2px 5px rgb(158, 158, 158);
     border: 2px solid;
     border-radius: 8px;
@@ -225,7 +225,7 @@ hr {
     transition: 0.2s ease;
     opacity: 1;
     height: 25%;
-    padding: 20px;
+    padding: 10px;
 }
 
 #start {
@@ -304,7 +304,7 @@ hr {
 }
 @media (  max-width: 700px) {
     body{
-        background-size: auto center;
+        background-size: auto 100%;
         background-attachment: fixed;
         background-color: white;
         overflow: hidden;

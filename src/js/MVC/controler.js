@@ -7,10 +7,8 @@ export const Controler = {
         keydownUsing: false,
         previousOrientation: "",
     },
-    ckickToNavigator(event){
+    isUsingNavigator(target){
 
-        const { target } = event
-            
         if ( target.closest('a') ) {
 
             const category = target.getAttribute('data-name')
@@ -102,9 +100,9 @@ export const Controler = {
             });
         }
         
-        this.IsChangeBackground(target , altKey, key)
+        this.isChangeBackground(target , altKey, key)
     },
-    IsChangeBackground(target , altKey = false, key = false) {
+    isChangeBackground(target , altKey = false, key = false) {
         if (target.closest('#last-background')) {
             View.ChangeBackground('last');
         } 
@@ -120,25 +118,23 @@ export const Controler = {
         const { target } = event  
             //события появления модального окна
             this.isTouchDeleteTask(target) 
-            this.IsChangeBackground(target)
+            this.isChangeBackground(target)
             this.isSmartPhoneInput(target)
+            this.isUsingNavigator(target)
         
         if ( window.screen.width > 700 ) {
             View.changeModalWindowForRotating()
         }
     },
-    isSmartPhoneRotation(){
-        if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {      
-                View.changeModalWindowForRotating()
-      }
+    testOrintation(){
+        View.changeModalWindowForRotating()
     },
     clickPC( event ){
         const { target } = event 
         //события появления модального окна
-        if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) )) {
             this.isClickDeleteTask(target) 
-            this.IsChangeBackground(target)
-            } 
+            this.isChangeBackground(target)
+            this.isUsingNavigator(target)
     },
     userSubmitTask( event ) {
      
@@ -151,7 +147,6 @@ export const Controler = {
             }
 
             const category = View.data.bodyElement.querySelector('.titleName').getAttribute('data-name') 
-                
             Model.changeLocalStorage(category, newTask,  Model.pushArrayElement)
             View.addNewTask(newTask)
         }
