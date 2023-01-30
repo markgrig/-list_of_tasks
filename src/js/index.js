@@ -4,39 +4,64 @@ import { View } from "./MVC/view"
 import { Controler } from "./MVC/controler"
 //localStorage.clear()
 const app = {
+    data: {
+        device:"",
+    },
     init() {
         this.event()
         this.main()
     },
     main() {
         View.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[Model.data.indexBackgroundImage-1]}')`
-        Controler.isSmartPhoneRotation()
+        
         View.renderTasks( Model.data.tasksToday.array , "today")
         View.renderTasks( Model.data.tasksWeek.array , "week")
         View.renderTasks( Model.data.tasksFuture.array , "future")
     },
     event(){
-        View.data.navigation.addEventListener(  'click' , ( event ) => {
-            Controler.ckickToNavigator(event)
-        })
-
-        //удаление задач с использованием клавиши альт
         
-        document.addEventListener( 'keydown' , ( event ) => {
-            Controler.PressKeyboard(event)
-        })
-
+        const devices = new RegExp('Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini', "i");
         
-        View.data.bodyElement.addEventListener( 'touchend', (event) => {
-            Controler.touchSmartPhone(event)
-        }) 
+        if (devices.test(navigator.userAgent)) {
 
+            this.data.device = "mobile"
+            //проверка ориентации мобильного устройства 
+            Controler.testOrintation()
 
-        View.data.bodyElement.addEventListener( 'click' , ( event ) => {
-            Controler.clickPC(event);
-        })   
+        }
 
-        const inputForm = document.querySelector('.textForm')
+        if ( this.data.device === "mobile" ) {
+
+            View.data.bodyElement.addEventListener( 'touchend', (event) => {
+                Controler.touchSmartPhone(event)
+            })
+    
+            window.addEventListener("orientationchange", () => {
+                View.changeModalWindowForRotating() 
+            }, false);
+
+        } else {
+
+            View.data.bodyElement.addEventListener( 'click' , ( event ) => {
+                Controler.clickPC(event);
+            })   
+    
+            document.addEventListener( 'keydown' , ( event ) => {
+                Controler.PressKeyboard(event)
+            })
+            
+            View.data.bodyElement.addEventListener( 'mouseover', (event) => {
+                View.showToolTip(event)
+            })
+            
+            View.data.bodyElement.addEventListener( 'mouseout', (event) => {
+                View.removeToolTip(event)
+            })
+
+        }
+
+        const inputForm = View.data.bodyElement.querySelector('.textForm')
+
         inputForm.addEventListener( 'input' , (event) => {
             Controler.userInputTask(event, inputForm )
         })
@@ -45,18 +70,6 @@ const app = {
         textForm.addEventListener( 'submit' , ( event ) => {
             Controler.userSubmitTask(event)
         })
-
-        View.data.bodyElement.addEventListener( 'mouseover', (event) => {
-            View.showToolTip(event)
-        })
-        
-        View.data.bodyElement.addEventListener( 'mouseout', (event) => {
-            View.removeToolTip(event)
-        })
-
-        window.addEventListener("orientationchange", () => {
-            View.changeModalWindowForRotating() 
-        }, false);
         
     }
 }
