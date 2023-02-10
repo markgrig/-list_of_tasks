@@ -152,7 +152,7 @@ export const View = {
     ChangeBackground( button ) {
         
         let indexBackgroundImage = Model.data.indexBackgroundImage;
-        
+     
         if ( button === 'last') {
            
             indexBackgroundImage -= 1 
@@ -167,7 +167,7 @@ export const View = {
                 } 
         }
         
-        this.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[indexBackgroundImage-1]}')`
+        this.data.bodyElement.style.backgroundImage = `url('../img/background${Model.data.indexBackgroundImage}.webp')`
         Model.data.indexBackgroundImage = indexBackgroundImage;
         Model.saveInLocalStorige(indexBackgroundImage , "indexBackgroundImage")
     },

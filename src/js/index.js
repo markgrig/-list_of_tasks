@@ -12,7 +12,7 @@ const app = {
         this.main()
     },
     main() {
-        View.data.bodyElement.style.backgroundImage = `url('${Model.data.imageBackgroundBase64[Model.data.indexBackgroundImage-1]}')`
+        View.data.bodyElement.style.backgroundImage = `url('../img/background${Model.data.indexBackgroundImage}.webp')`
         
         View.renderTasks( Model.data.tasksToday.array , "today")
         View.renderTasks( Model.data.tasksWeek.array , "week")

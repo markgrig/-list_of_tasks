@@ -1,5 +1,4 @@
 import { View } from "./view"
-import { imageBackground } from "./img/background"
 
 export const Model = {
     deleteArrayElement( array = [] , indexDelete ) {
@@ -106,6 +105,5 @@ export const Model = {
             category: "future"
         },
         indexBackgroundImage : JSON.parse( localStorage.getItem("indexBackgroundImage") )|| 1,
-        imageBackgroundBase64: imageBackground,
     },
 }
