@@ -12,8 +12,8 @@ const app = {
         this.main()
     },
     main() {
-        View.data.bodyElement.style.backgroundImage = `url('../img/background${Model.data.indexBackgroundImage}.webp')`
         
+        View.renderBackground();
         View.renderTasks( Model.data.tasksToday.array , "today")
         View.renderTasks( Model.data.tasksWeek.array , "week")
         View.renderTasks( Model.data.tasksFuture.array , "future")

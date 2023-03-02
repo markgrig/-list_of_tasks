@@ -1,11 +1,20 @@
 
 import { Model } from "./model"
 
+import background1 from "../../img/background1.webp"
+import background2 from "../../img/background3.webp"
+import background3 from "../../img/background2.webp"
+import background4 from "../../img/background4.webp"
+
 export const View = {
     data: {
         bodyElement: document.querySelector('body'),
         navigation: document.querySelector('.navigator'),
         listOfTask: document.querySelector('.list'),
+        background: [ background1 , background2, background3, background4]
+    },
+    renderBackground() {   
+        this.data.bodyElement.style.backgroundImage = `url('./img/background${Model.data.indexBackgroundImage}.webp')`
     },
     hideLoading(){
         const loadingElement =  this.data.bodyElement.querySelector(".box-loading")
@@ -166,10 +175,11 @@ export const View = {
                     indexBackgroundImage = 1
                 } 
         }
-        
-        this.data.bodyElement.style.backgroundImage = `url('../img/background${Model.data.indexBackgroundImage}.webp')`
+       
         Model.data.indexBackgroundImage = indexBackgroundImage;
+        this.renderBackground();
         Model.saveInLocalStorige(indexBackgroundImage , "indexBackgroundImage")
+
     },
       //функция возвращающая окно подсказки 
       creatToolTip(text) {

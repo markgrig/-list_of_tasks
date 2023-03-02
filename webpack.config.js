@@ -4,11 +4,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
  module.exports = {
   mode: 'development',
+
+    
   module: {
     rules: [
       { test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
-      { test: /\.(js)$/, use: 'babel-loader' },
-      //загрузка картнинок ( сейчас фон в base64)
+      { test: /\.(js)$/, use: 'babel-loader' },   
+      {
+          test: /\.(png|webp)$/,
+          type: 'asset/resource',
+       },
+
       /*
       {
         test: /\.(jpe?g|png|gif|svg)$/i, 
@@ -25,7 +31,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
   },
    output: {
     filename: '[name].min.js',
-    path: path.resolve(__dirname),
+    path:  path.resolve(__dirname),
+    assetModuleFilename: 'img/[name][ext]'
      
    }  ,
    devServer: {
