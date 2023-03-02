@@ -45,32 +45,20 @@ export const Model = {
     saveInLocalStorige( indexBackgroundImage, nameSaver ) { 
         localStorage.setItem(`${nameSaver}`, JSON.stringify( indexBackgroundImage ))
     },
-    getBase64Image(img) {
-        console.log(img);
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
     
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-    
-        var dataURL = canvas.toDataURL("image/png");
-    
-        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-    },
     data: {
         tasksToday : JSON.parse( localStorage.getItem("tasksToday") ) ||
         {
             array: 
             [
                 {
-                    text: "Повторить пройденный материал"
+                    text: "Решение алгоритмических задач"
                 },
                 {
-                    text: "Посмотреть урок по препроцессору Sass/SCSS"
+                    text: "Просмотр курсов по React, веб-дизайну"
                 },
                 {
-                    text: 'Покодить',
+                    text: 'Работа над проектом',
                 },
             ],
             category: "today"
@@ -81,13 +69,10 @@ export const Model = {
             array: 
             [
                 {
-                    text: "Добавить в проект магазин vue-js подкатегории"
+                    text: "Работа над проектом"
                 },
                 {
-                    text: 'Пройти собесодование',
-                },
-                {
-                    text: 'Искать уезвимые места в проекте',
+                    text: 'Прохождение собеседований',
                 },
             ],
             category: "week"
@@ -98,7 +83,7 @@ export const Model = {
             array: 
             [
                 {
-                    text: "Внести исправления в проект, имея уверенность, что это упростит его поддержку"
+                    text: "Придумать новый проект"
                 },
             ]
             ,
